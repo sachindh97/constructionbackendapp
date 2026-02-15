@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/auth.routes');
@@ -6,6 +7,11 @@ const purchaseRoutes = require('./routes/purchase.routes');
 const salesRoutes = require('./routes/sales.routes');
 const commonRoutes = require('./routes/common.routes');
 const app = express();
+
+
+app.use(cors({
+  origin: '*'
+}));
 
 app.use(cors());
 app.use(express.json());
@@ -24,6 +30,10 @@ db.raw('select 1+1 as result')
   .catch(err => console.log('DB Error ❌', err));
 
 
-app.listen(5000, () => {
-  console.log('Server running on port 5000');
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
+
+
